@@ -1,0 +1,36 @@
+ {
+   "context": "client",
+   "identifier": "army utilities",
+   "display_name": "Army utilities",
+   "description": "A mod that adds several automation utilitys, a recent metal trade window, and ghosts of scouted units",
+   "author": "Ferretmaster",
+   "version": "1.00",
+   "build": "114475",
+   "date": "2020-6-24",
+   "signature": "not yet implemented",
+
+   
+   "priority": 100,
+   "icon": "http://pamods.github.io/icons/tAutoFactory.png",
+    "scenes": {
+        "LiveGame_FloatZone": [
+            "coui://ui/mods/ArmyUtil/floatzone/DataUtil.css",
+            "coui://ui/mods/ArmyUtil/floatzone/DataUtil.js"
+        ],
+        "live_game": [
+            "coui://ui/mods/ArmyUtil/live_game/ArmyUtil.js",
+            "coui://ui/mods/ArmyUtil/live_game/UnitGhosts.js"
+        ],
+	"settings": [
+            "coui://ui/mods/ArmyUtil/Settings/ArmyUtilSettings.js"
+        ],
+	"live_game_options_bar": [
+            "coui://ui/mods/ArmyUtil/live_game/ArmyUtilOptionsBar.js"
+        ]
+        
+    },
+    "dependencies": [
+    "com.pa.raevn.rfloatframe"
+    ],
+   "category": ["ui","titans", "in-game"]
+ }

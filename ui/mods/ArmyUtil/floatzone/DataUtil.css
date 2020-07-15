@@ -1,0 +1,46 @@
+.hide-for-cast  #data_util_frame {
+	display: none;
+}
+
+/*
+.div_data_util_bar {	
+	background: url('coui://ui/mods/ArmyUtil/floatzone/img_bground.png') top center no-repeat;
+	background-size: contain;
+	padding-top: 10px;
+	padding-bottom: 20px;
+	height: 500px;
+}
+*/
+
+
+
+.div_data_util_bar_cont {
+	margin: 4px 0px 2px 0px;
+}
+
+.data_util_frame_img {
+	display: block;
+	width: 43px;
+	margin: -10px 0px 0px 10px;
+}
+
+.data_util_frame_img img {
+	width: 70%;
+	height: auto;
+	margin: 0px -20px 2px 5px;
+}
+
+.data_util_trade {
+	font-size: 10px;
+	margin: 20px 0px 0px 0px;
+	text-align: left;
+	width: 100%;
+	font-family: 'DINPRO-LIGHT';
+}
+
+.lock_icon {
+	height: 20px;
+	position: absolute;
+	left: 199px;
+	bottom: 1px;
+}
