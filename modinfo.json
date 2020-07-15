@@ -1,17 +1,17 @@
  {
    "context": "client",
-   "identifier": "army utilities",
+   "identifier": "com.pa.ferretmaster.armyutilities",
    "display_name": "Army utilities",
    "description": "A mod that adds several automation utilitys, a recent metal trade window, and ghosts of scouted units",
    "author": "Ferretmaster",
    "version": "1.00",
-   "build": "114475",
-   "date": "2020-6-24",
+   "build": "114759",
+   "date": "2020-07-16",
    "signature": "not yet implemented",
 
    
    "priority": 100,
-   "icon": "http://pamods.github.io/icons/tAutoFactory.png",
+   "icon": "https://github.com/ferret-Master/Army-Utilities/blob/release/icon.png?raw=true",
     "scenes": {
         "LiveGame_FloatZone": [
             "coui://ui/mods/ArmyUtil/floatzone/DataUtil.css",
