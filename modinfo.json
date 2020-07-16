@@ -11,7 +11,7 @@
 
    "forum": "https://forums.planetaryannihilation.com/threads/rel-client-army-utilities.73491/",
    "priority": 100,
-   "icon": "https://github.com/ferret-Master/Army-Utilities/blob/release/ArmyUtilities.png?raw=true",
+   "icon": "https://github.com/ferret-Master/Army-Utilities/blob/Release/ArmyUtilities.png?raw=true",
     "scenes": {
         "LiveGame_FloatZone": [
             "coui://ui/mods/ArmyUtil/floatzone/DataUtil.css",
