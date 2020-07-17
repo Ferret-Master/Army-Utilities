@@ -20,13 +20,7 @@ var Scout_bar = (function () {
 	    return Scout_bar;
 })();
 
-var Ghost_bar = (function () {
-	console.log("Ghost bar set")
-	var Ghost_bar = {};
-	Ghost_bar.active = ko.observable(true);
 
-	return Ghost_bar;
-})();
 
 (function () {
     "use strict";
@@ -46,6 +40,5 @@ var Ghost_bar = (function () {
 	
 	$(".div_ingame_options_bar_cont").prepend("<div class=\"btn_ingame_options div_Scout_bar_cont\"><a href=\"#\" data-bind=\"click: function () { Scout_bar.active(!Scout_bar.active()); api.Panel.message(api.Panel.parentId, 'Scout_bar', Scout_bar.active()?'false':'true'); }\"><!-- ko if: Scout_bar.active() --><img src=\"coui://ui/mods/ArmyUtil/live_game/autoscoutoff.png\" /><!-- /ko --><!-- ko ifnot: Scout_bar.active() --><img src=\"coui://ui/mods/ArmyUtil/live_game/autoscout.png\" /><!-- /ko --></a></div>");
 
-	$(".div_ingame_options_bar_cont").prepend("<div class=\"btn_ingame_options div_Ghost_bar_cont\"><a href=\"#\" data-bind=\"click: function () { Ghost_bar.active(!Ghost_bar.active()); api.Panel.message(api.Panel.parentId, 'Ghost_bar', Ghost_bar.active()?'true':'false'); }\"><!-- ko if: Ghost_bar.active() --><img src=\"coui://ui/mods/ArmyUtil/live_game/Ghost.png\" /><!-- /ko --><!-- ko ifnot: Ghost_bar.active() --><img src=\"coui://ui/mods/ArmyUtil/live_game/Ghostoff.png\" /><!-- /ko --></a></div>");
-
+	
 })();
