@@ -18,8 +18,8 @@
             "coui://ui/mods/ArmyUtil/floatzone/DataUtil.js"
         ],
         "live_game": [
-            "coui://ui/mods/ArmyUtil/live_game/ArmyUtil.js",
-            "coui://ui/mods/ArmyUtil/live_game/UnitGhosts.js"
+            "coui://ui/mods/ArmyUtil/live_game/ArmyUtil.js"
+          
         ],
 	"settings": [
             "coui://ui/mods/ArmyUtil/Settings/ArmyUtilSettings.js"
