@@ -1,6 +1,6 @@
  {
    "context": "client",
-   "identifier": "com.pa.ferretmaster.armyutilities",
+   "identifier": "com.pa.ferretmaster.army-utilities",
    "display_name": "Army utilities",
    "description": "A mod that adds several automation utilitys, a recent metal trade window, and ghosts of scouted units",
    "author": "Ferretmaster",
