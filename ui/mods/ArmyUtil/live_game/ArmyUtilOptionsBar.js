@@ -31,8 +31,7 @@ var Scout_bar = (function () {
     model.Reclaim_bar = Reclaim_bar;
 	model.Metal_bar = Metal_bar;
 	model.Scout_bar = Scout_bar;
-	model.Ghost_bar = Ghost_bar;
-
+	
     //add toggle to live_game bottom bar
 	$(".div_ingame_options_bar_cont").prepend("<div class=\"btn_ingame_options div_metal_bar_cont\"><a href=\"#\" data-bind=\"click: function () { Metal_bar.active(!Metal_bar.active()); api.Panel.message(api.Panel.parentId, 'Metal_bar', Metal_bar.active()?'false':'true'); }\"><!-- ko if: Metal_bar.active() --><img src=\"coui://ui/mods/ArmyUtil/live_game/autometaloff.png\" /><!-- /ko --><!-- ko ifnot: Metal_bar.active() --><img src=\"coui://ui/mods/ArmyUtil/live_game/autometal.png\" /><!-- /ko --></a></div>");
 	
