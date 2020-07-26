@@ -1,49 +1,49 @@
 (function() {
 	
-	function doCommand(world, id, command){ 
-		//console.log("do command called successfully")
+	function doCommand(world, id, command, planetnumber){ 
+	
+		
 		var two = !_.isArray(id);
 				if (two){
 						id = [id];
 				}
-				//console.log("id: "+id)
+				
         if (world){ 
-			//console.log("if world successful")
+
             world.getUnitState(id).then(function (ready) {
 				var unitData = this.result;
 				var one = !_.isArray(unitData);
 				if (one){
 						unitData = [unitData];
 				}
-				//console.log(unitData)
-				//console.log(unitData.length)
+				
 				for(var i = 0; i<unitData.length;i++){
-					//console.log("running order loop")
+
 					
 						switch (command){
 							
-						case 'worldreclaim':// not sure whether to check idle in here or out	
-						//console.log("case world reclaim")
+						case 'worldreclaim':
+						
 							if (unitData[i].hasOwnProperty('orders') !== true){
 								
-								api.getWorldView(0).sendOrder({units: id[i],command: 'reclaim',location: {planet: 0,pos: [0,0,0] ,radius: 1000}})
+								api.getWorldView(0).sendOrder({units: id[i],command: 'reclaim',location: {planet: planetnumber,pos: [0,0,0] ,radius: 1000}})
 								
 								}
 							break
 						
 						case 'worldmetal':
-						//console.log("case world metal")
+						
 							if (unitData[i].hasOwnProperty('orders') !== true){
 									
-									api.getWorldView(0).sendOrder({units: id[i],command: 'build',location: {planet: 0,pos: [0,0,0] ,radius: 1000},spec:'/pa/units/land/metal_extractor/metal_extractor.json'})
+									api.getWorldView(0).sendOrder({units: id[i],command: 'build',location: {planet: planetnumber,pos: [0,0,0] ,radius: 1000},spec:'/pa/units/land/metal_extractor/metal_extractor.json'})
 									
 							}	
 								break	
 								
 								
 						case 'worldscout':
-						//console.log("case world metal")
-							var scout_points = 8 //too few and it will idle, too many it clutters the screen, 10 lets you at elast see the path so you can change it if needed
+						
+							var scout_points = 6 //too few and it will idle, too many it clutters the screen, 10 lets you at elast see the path so you can change it if needed
 							if (unitData[i].hasOwnProperty('orders') !== true){
 									
 									for(var points = 0; points<scout_points;points++){// queuing up many random movement commands, move doesnt have the pausing of patrol
@@ -60,7 +60,7 @@
 										}
 										
 										
-										api.getWorldView(0).sendOrder({units: id[i],command: 'move',location: {planet: 0,pos: posArray},queue: true})
+										api.getWorldView(0).sendOrder({units: id[i],command: 'move',location: {planet: planetnumber,pos: posArray},queue: true})
 										
 										
 									}
@@ -81,7 +81,7 @@
             });
         }
         else
-            _.delay(automation, 1000);
+		_.delay(doCommand, 1000);
 		
 	};
 	
@@ -92,11 +92,10 @@
 	var autoMetalBot;
 	var autoMetalNaval;
 	var autoReclaim;
-	var Unit_Ghosts;
 	var autoMetalToggle = false //ingame
 	var autoReclaimToggle = false//ingame
 	var autoScoutToggle = false //ingame
-	
+	var runCounter = 0;
 	
 	var numberOfSettings = 7
 	var SettingsList = []
@@ -105,7 +104,7 @@
 			SettingsList[i] = api.settings.isSet('ArmyUtilities', Settings[i], true)==undefined?false:api.settings.isSet('ArmyUtilities', Settings[i], true);
 			
 			if(SettingsList[i] === "ON"){SettingsList[i] = true;}
-			console.log(SettingsList[i]);
+			//console.log(SettingsList[i]);
 			
 		}
 	
@@ -124,44 +123,63 @@
 	//console.log("ran automation");
         var worldView = api.getWorldView(0);
 		var armyindex = model.armyIndex();
+		var PlayerArmys = [];
 		if (typeof armyindex == "undefined"){
 			
 			armyindex = model.armyId()
 		}
 	
+		PlayerArmys.push([]);
+		
+			
+	
+			for(var planetid = 0;planetid<planetnum;planetid++){
+				
+				
+				PlayerArmys[0][planetid] = worldView.getArmyUnits(armyindex,planetid);
+				
+			}
+			
+		Promise.all(PlayerArmys.map(Promise.all, Promise)).then(function (ready){
         if (worldView && automationSetting === true) {
 			
 
 			for(var i = 0; i<planetnum;i++){
-
-            worldView.getArmyUnits(armyindex,i).then(function (ready) {
-				var army = this.result
-			
+				
+            
+				var army = ready
+				//	console.log(ready)
+				army = army[0][i]
+				
 				if(army.hasOwnProperty('/pa/units/air/air_scout/air_scout.json')&& autoScout && autoScoutToggle === true){
-				doCommand(worldView, army['/pa/units/air/air_scout/air_scout.json'], 'worldscout')
+				doCommand(worldView, army['/pa/units/air/air_scout/air_scout.json'], 'worldscout',i)
 				}
 				
 				if(army.hasOwnProperty('/pa/units/air/fabrication_aircraft/fabrication_aircraft.json') && autoMetalAir === true && autoMetalToggle === true){
-				doCommand(worldView, army['/pa/units/air/fabrication_aircraft/fabrication_aircraft.json'], 'worldmetal')
+				doCommand(worldView, army['/pa/units/air/fabrication_aircraft/fabrication_aircraft.json'], 'worldmetal',i)
 				}
 				if(army.hasOwnProperty('/pa/units/land/fabrication_bot/fabrication_bot.json') && autoMetalBot === true && autoMetalToggle === true){
-				doCommand(worldView, army['/pa/units/land/fabrication_bot/fabrication_bot.json'], 'worldmetal')
+				doCommand(worldView, army['/pa/units/land/fabrication_bot/fabrication_bot.json'], 'worldmetal',i)
 				}
 				if(army.hasOwnProperty('/pa/units/land/fabrication_vehicle/fabrication_vehicle.json') && autoMetalVehicle === true && autoMetalToggle === true){
-				doCommand(worldView, army['/pa/units/land/fabrication_vehicle/fabrication_vehicle.json'], 'worldmetal')
+				doCommand(worldView, army['/pa/units/land/fabrication_vehicle/fabrication_vehicle.json'], 'worldmetal',i)
 				}
 				if(army.hasOwnProperty('/pa/units/sea/fabrication_ship/fabrication_ship.json') && autoMetalAir === true && autoMetalToggle === true){
-				doCommand(worldView, army['/pa/units/sea/fabrication_ship/fabrication_ship.json'], 'worldmetal')
+				doCommand(worldView, army['/pa/units/sea/fabrication_ship/fabrication_ship.json'], 'worldmetal',i)
 				}
 				if(army.hasOwnProperty('/pa/units/land/fabrication_bot_combat/fabrication_bot_combat.json') && autoReclaim === true && autoReclaimToggle === true){
-				doCommand(worldView, army['/pa/units/land/fabrication_bot_combat/fabrication_bot_combat.json'], 'worldreclaim')
+				doCommand(worldView, army['/pa/units/land/fabrication_bot_combat/fabrication_bot_combat.json'], 'worldreclaim',i)
 				}
-                _.delay(automation, 5000); // effectivly acts as a loop, this is the time between loops
-			});
+                
+			
 		}
+		_.delay(automation, 5000); // effectivly acts as a loop, this is the time between loops
         }
         else
-            _.delay(automation, 5000);
+			_.delay(automation, 5000);
+		}).catch(function (error) {
+			var reference_error = true; //just something to put in here
+		});
     };
 	
 	handlers.Metal_bar = function(payload) {
@@ -199,5 +217,3 @@
 	
 				
 })();
-
-
