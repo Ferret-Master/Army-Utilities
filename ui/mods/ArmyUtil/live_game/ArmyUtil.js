@@ -120,7 +120,7 @@
 	
 	var automation = function () { 
 		var planetnum = model.planetListState().planets.length-1;
-		if(planetnum, <1){_.delay(automation, 5000);}
+		if(planetnum <1){_.delay(automation, 5000);}
 	//console.log("ran automation");
         var worldView = api.getWorldView(0);
 		var armyindex = model.armyIndex();
