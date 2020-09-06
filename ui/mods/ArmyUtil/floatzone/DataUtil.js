@@ -3,8 +3,25 @@
 	
 	model.enemyMetalDestroyed = ko.observable(0);
 	model.metalLost = ko.observable(0);
+	model.t1metal = ko.observable(0);
+	model.t2metal = ko.observable(0);
+	model.t1power = ko.observable(0);
+	model.t2power = ko.observable(0);
+	model.armyCount = ko.observable(0);
+	model.fabCount = ko.observable(0);
+	model.facCount = ko.observable(0);
+
 	addLinkageLiveGame("model.enemyMetalDestroyed()", "model.enemyMetalDestroyed");
 	addLinkageLiveGame("model.metalLost()", "model.metalLost");
+	addLinkageLiveGame("model.t1metal()","model.t1metal");
+	addLinkageLiveGame("model.t2metal()","model.t2metal");
+	addLinkageLiveGame("model.t1power()","model.t1power");
+	addLinkageLiveGame("model.t2power()","model.t2power");
+
+	addLinkageLiveGame("model.armyCount()","model.armyCount");
+	addLinkageLiveGame("model.fabCount()","model.fabCount");
+	addLinkageLiveGame("model.facCount()","model.facCount");
+
 	
 	model.commanderHealth = ko.observable(0);
 	addLinkageLiveGame("model.commanderHealth()", "model.commanderHealth");
@@ -16,14 +33,15 @@
 			return false;
 		}
 	});
+	
 	var metalTrade = model.enemyMetalDestroyed() - model.metalLost()
 	
-	//var PreviousTime = 2000000000000
+
 	var oldTrade = metalTrade
 	var recentmetalTrade = 0;
 	var minutes = 3;
 	var milMin = minutes*1000*60
-	//if(Date.now()<landTime){landTime = Date.now();}
+
 	
 	function metalTradeOld(metaltradecurrent){
 		
@@ -33,10 +51,6 @@
 	}
 	model.recentTrade = ko.computed(function() {
 		metalTrade = model.enemyMetalDestroyed() - model.metalLost() 
-		
-		
-		
-		
 		if (metalTrade < oldTrade){recentmetalTrade = metalTrade - oldTrade}
 		if (metalTrade > oldTrade){recentmetalTrade = Math.abs(metalTrade - oldTrade)}
 		_.delay(metalTradeOld, milMin, metalTrade);
@@ -44,23 +58,27 @@
 	});
 
 
-/*
+
+function makeDiv(name,modelname){
+
+	return "<div class=data_util_trade'>"+"<p style= color:DodgerBlue;font-weight: bold;font-size:200%;>" +name+"</p>"+"</div>" +
+	"<div style=color:lime;>" +"<span data-bind='text: parseInt("+modelname+"())'></span>"+"</div>";
+															
+
+}
+
+	var nameList = ["recent metal trade","t1metal","t2metal","t1power","t2power","army count","factory count","fabricator count"];
+	var varList = ["model.recentTrade","model.t1metal","model.t2metal","model.t1power","model.t2power","model.armyCount","model.facCount","model.fabCount"];
+
+
+var body = "";
+
+for(var i = 0;i<nameList.length;i++){
+	body += makeDiv(nameList[i],varList[i])
+}
 
 
 
-
-"<div class='data_util_select_opponent' data-bind='click: function() { api.select.commander(); api.camera.track(true); }'>" +
-									"<img src='coui://ui/mods/ArmyUtil/floatzone/icon_si_commander.png'/>" +
-									
-								"</div>" +
-								
-								
-								"<div class='status_bar_frame_commanderHP'>" +
-										"<div class='status_bar_commanderHP' data-bind='style: {width: \"\" + (model.commanderHealth() * 158) + \"px\"}'></div>" +
-									"</div>" +
-
-
-*/
 	$("#data_util_frame_content").append(
 		"<div class='div_data_util_bar' data-bind=''>" +
 			"<div class='div_data_util_bar_cont'>" +
@@ -68,38 +86,29 @@
 					"<tbody>" +
 						"<tr>" +
 							"<td>" +
-								"<div class=data_util_trade'>" +
-										"<a> recent metal trade</a>" +
-									"</div>" +
-				
-								"<div class='div_status_bar_display'>" +
-									
-									"<div class='status_stats'>" +
-										"<span data-bind='text: parseInt(model.recentTrade())'></span>" +
-									 
-									"</div>" +
-								"</div>" +
+								body
+									+
 							"</td>" +
 						"</tr>" +
 					"</tbody>" +
 				"</table>" +
-				"<img id='commander_info_lock' src='' data-bind='click: function() { model.commanderFrameLockEvent(); }' class='lock_icon'/>" +
+				"<img id='data_util_lock' src='' data-bind='click: function() { model.dataUtilLockEvent(); }' class='lock_icon'/>" +
 			"</div>" +
 		"</div>");
 	
 	if (localStorage["frames_data_util_frame_lockStatus"] == "true") {
-		$("#commander_info_lock").attr("src", "coui://ui/mods/ArmyUtil/floatzone/lock-icon.png");
+		$("#data_util_lock").attr("src", "coui://ui/mods/ArmyUtil/floatzone/lock-icon.png");
 	} else  {
-		$("#commander_info_lock").attr("src", "coui://ui/mods/ArmyUtil/floatzone/unlock-icon.png");
+		$("#data_util_lock").attr("src", "coui://ui/mods/ArmyUtil/floatzone/unlock-icon.png");
 	}
 })();
 
-model.commanderFrameLockEvent = function() {
+model.dataUtilLockEvent = function() {
 	if (localStorage["frames_data_util_frame_lockStatus"] == "true") {
-		$("#commander_info_lock").attr("src", "coui://ui/mods/ArmyUtil/floatzone/unlock-icon.png");
+		$("#data_util_lock").attr("src", "coui://ui/mods/ArmyUtil/floatzone/unlock-icon.png");
 		unlockFrame("data_util_frame");
 	} else  {
-		$("#commander_info_lock").attr("src", "coui://ui/mods/ArmyUtil/floatzone/lock-icon.png");
+		$("#data_util_lock").attr("src", "coui://ui/mods/ArmyUtil/floatzone/lock-icon.png");
 		lockFrame("data_util_frame");
 	}
 };
