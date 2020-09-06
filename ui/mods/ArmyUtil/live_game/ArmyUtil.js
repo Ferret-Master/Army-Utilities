@@ -95,8 +95,23 @@
 	var autoMetalToggle = false //ingame
 	var autoReclaimToggle = false//ingame
 	var autoScoutToggle = false //ingame
-	var runCounter = 0;
+
 	
+
+	var t1metal = 0;
+	var t1power = 0;
+	var t2metal = 0;
+	var t2power = 0;
+
+	model.t1metal = ko.observable(0);
+	model.t2metal = ko.observable(0);
+	model.t1power = ko.observable(0);
+	model.t2power = ko.observable(0);
+	model.armyCount = ko.observable(0);
+	model.fabCount = ko.observable(0);
+	model.facCount = ko.observable(0);
+
+
 	var numberOfSettings = 7
 	var SettingsList = []
 	var Settings = ['Automation','Auto_Metal_Air','Auto_Metal_Bot','Auto_Metal_Vehicle','Auto_Metal_Naval','Auto_Reclaim_Combat_Fab','Auto_Scout']
@@ -104,7 +119,7 @@
 			SettingsList[i] = api.settings.isSet('ArmyUtilities', Settings[i], true)==undefined?false:api.settings.isSet('ArmyUtilities', Settings[i], true);
 			
 			if(SettingsList[i] === "ON"){SettingsList[i] = true;}
-			//console.log(SettingsList[i]);
+		
 			
 		}
 	
@@ -120,7 +135,6 @@
 	var automation = function () { 
 		var planetnum = model.planetListState().planets.length-1;
 		if(planetnum <1){_.delay(automation, 5000);}
-	//console.log("ran automation");
         var worldView = api.getWorldView(0);
 		var armyindex = model.armyIndex();
 		var PlayerArmys = [];
@@ -143,14 +157,48 @@
 		Promise.all(PlayerArmys.map(Promise.all, Promise)).then(function (ready){
         if (worldView && automationSetting === true) {
 			
+			
+
+			t1metal = 0;
+			t1power = 0;
+			t2metal = 0;
+			t2power = 0;
+
+			armyCount = 0;
+			fabCount = 0;
+			facCount = 0;
 
 			for(var i = 0; i<planetnum;i++){
 				
-            
-				var army = ready
-				//	console.log(ready)
-				army = army[0][i]
 				
+				var army = ready
+	
+				army = army[0][i]
+				armyKeys = _.keys(army)
+				for(var j = 0;j<armyKeys.length;j++){
+					var temp = model.unitSpecs[armyKeys[j]];
+					if(_.contains(temp.types,"UNITTYPE_Mobile") && _.contains(temp.commands,"Attack")){armyCount += army[armyKeys[j]].length}
+					if(_.contains(temp.types,"UNITTYPE_Fabber")){fabCount += army[armyKeys[j]].length}
+					if(_.contains(temp.types,"UNITTYPE_Factory")){facCount += army[armyKeys[j]].length}
+
+
+				}
+
+				if(army.hasOwnProperty('/pa/units/land/metal_extractor/metal_extractor.json')){
+					t1metal += army['/pa/units/land/metal_extractor/metal_extractor.json'].length;
+					}
+				if(army.hasOwnProperty('/pa/units/land/energy_plant/energy_plant.json')){
+						t1power += army['/pa/units/land/energy_plant/energy_plant.json'].length;
+					}
+				if(army.hasOwnProperty('/pa/units/land/metal_extractor_adv/metal_extractor_adv.json')){
+					t2metal += army['/pa/units/land/metal_extractor_adv/metal_extractor_adv.json'].length;
+					}
+				if(army.hasOwnProperty('/pa/units/land/energy_plant_adv/energy_plant_adv.json')){
+						t2power += army['/pa/units/land/energy_plant_adv/energy_plant_adv.json'].length;
+					}			
+					
+			
+
 				if(army.hasOwnProperty('/pa/units/air/air_scout/air_scout.json')&& autoScout && autoScoutToggle === true){
 				doCommand(worldView, army['/pa/units/air/air_scout/air_scout.json'], 'worldscout',i)
 				}
@@ -173,6 +221,15 @@
                 
 			
 		}
+		model.t1metal(t1metal);
+		model.t1power(t1power);
+		model.t2metal(t2metal);
+		model.t2power(t2power);
+
+		model.armyCount(armyCount);
+		model.fabCount(fabCount);
+		model.facCount(facCount);
+
 		_.delay(automation, 5000); // effectivly acts as a loop, this is the time between loops
         }
         else
@@ -212,7 +269,7 @@
 
 		console.log("Auto scout toggled "+ autoScoutToggle)
     };
-	console.log("got past handlers");
+	
     automation();
 	
 				
