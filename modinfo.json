@@ -2,7 +2,7 @@
    "context": "client",
    "identifier": "com.pa.ferretmaster.army-utilities",
    "display_name": "Army utilities",
-   "description": "A mod that adds several automation utilitys and a recent metal trade window",
+   "description": "A mod that adds several automation utilities and a recent metal trade window",
    "author": "Ferretmaster",
    "version": "1.02",
    "build": "114880",
