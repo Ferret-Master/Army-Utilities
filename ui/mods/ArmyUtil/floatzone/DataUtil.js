@@ -10,6 +10,7 @@
 	model.armyCount = ko.observable(0);
 	model.fabCount = ko.observable(0);
 	model.facCount = ko.observable(0);
+	model.RealTimeSinceLanding = ko.observable(0);
 
 	addLinkageLiveGame("model.enemyMetalDestroyed()", "model.enemyMetalDestroyed");
 	addLinkageLiveGame("model.metalLost()", "model.metalLost");
@@ -21,6 +22,8 @@
 	addLinkageLiveGame("model.armyCount()","model.armyCount");
 	addLinkageLiveGame("model.fabCount()","model.fabCount");
 	addLinkageLiveGame("model.facCount()","model.facCount");
+
+	addLinkageLiveGame("model.RealTimeSinceLanding()","model.RealTimeSinceLanding");
 
 	
 	model.commanderHealth = ko.observable(0);
@@ -58,17 +61,33 @@
 	});
 
 
+	model.displayedMinute = ko.computed(function() {
+		
+		var displayedMinutesSinceLanding = Math.floor(model.RealTimeSinceLanding()/60)
+		
+		
+		return displayedMinutesSinceLanding
+	});
+
+	model.displayedSecond = ko.computed(function() {
+		var displayedSecondsSinceLanding = Math.round(model.RealTimeSinceLanding()%60);
+		if(displayedSecondsSinceLanding < 10){displayedSecondsSinceLanding =  "0"+displayedSecondsSinceLanding}
+		
+		
+		return displayedSecondsSinceLanding;
+	});
+
+
 
 function makeDiv(name,modelname){
 
 	return "<div class=data_util_trade'>"+"<p style= color:DodgerBlue;font-weight: bold;font-size:200%;>" +name+"</p>"+"</div>" +
-	"<div style=color:lime;>" +"<span data-bind='text: parseInt("+modelname+"())'></span>"+"</div>";
-															
-
+	"<div style=color:lime;>" +"<span data-bind='text: "+modelname+"' ></span>"+"</div>";											
+							
 }
 
-	var nameList = ["recent metal trade","t1metal","t2metal","t1power","t2power","army count","factory count","fabricator count"];
-	var varList = ["model.recentTrade","model.t1metal","model.t2metal","model.t1power","model.t2power","model.armyCount","model.facCount","model.fabCount"];
+	var nameList = ["recent metal trade","time since landing","fabricator count","army count","factory count","metal spots"];
+	var varList = ['parseInt(model.recentTrade())','model.displayedMinute() + ":" + model.displayedSecond()','parseInt(model.fabCount())','parseInt(model.armyCount())','parseInt(model.facCount())','parseInt(model.t1metal())'];
 
 
 var body = "";
