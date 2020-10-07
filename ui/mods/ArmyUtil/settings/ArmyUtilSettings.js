@@ -17,8 +17,8 @@
 
 	//the following section of code used wondibles connect buttons mod as reference so is fairly similar; credit to him for making nice scalable settings
 	
-  var numberOfSettings = 7
-  var SettingsList = ['Automation','Auto_Metal_Air','Auto_Metal_Bot','Auto_Metal_Vehicle','Auto_Metal_Naval','Auto_Reclaim_Combat_Fab','Auto_Scout']
+  var numberOfSettings = 6
+  var SettingsList = ['Auto_Metal_Air','Auto_Metal_Bot','Auto_Metal_Vehicle','Auto_Metal_Naval','Auto_Reclaim_Combat_Fab','Auto_Scout']
   var groups = []
 
   for (var i = 0;i < numberOfSettings;i=i+1) {
