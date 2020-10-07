@@ -1,12 +1,12 @@
  {
    "context": "client",
-   "identifier": "com.pa.ferretmaster.army-utilities",
+   "identifier": "com.pa.ferretmaster.army-utilities-dev",
    "display_name": "Army utilities",
-   "description": "A mod that adds several automation utilities and a recent metal trade window",
+   "description": "A mod that adds a variety of stats in a window",
    "author": "Ferretmaster",
-   "version": "1.02",
+   "version": "1.03",
    "build": "114880",
-   "date": "2020-09-06",
+   "date": "2020-10-07",
    "signature": "not yet implemented",
 
    "forum": "https://forums.planetaryannihilation.com/threads/rel-client-army-utilities.73491/",
@@ -26,7 +26,10 @@
         ],
 	"live_game_options_bar": [
             "coui://ui/mods/ArmyUtil/live_game/ArmyUtilOptionsBar.js"
-        ]
+        ],
+        "live_game_time_bar": [
+            "coui://ui/mods/ArmyUtil/live_game/ArmyUtilTime.js"
+         ]    
         
     },
     "dependencies": [
