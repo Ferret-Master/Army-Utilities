@@ -24,7 +24,7 @@ var Scout_bar = (function () {
 
 (function () {
     "use strict";
-	console.log("made it here")
+	//console.log("made it here")
     
 
     //visible to knockout
@@ -33,11 +33,11 @@ var Scout_bar = (function () {
 	model.Scout_bar = Scout_bar;
 	
     //add toggle to live_game bottom bar
-	$(".div_ingame_options_bar_cont").prepend("<div class=\"btn_ingame_options div_metal_bar_cont\"><a href=\"#\" data-bind=\"click: function () { Metal_bar.active(!Metal_bar.active()); api.Panel.message(api.Panel.parentId, 'Metal_bar', Metal_bar.active()?'false':'true'); }\"><!-- ko if: Metal_bar.active() --><img src=\"coui://ui/mods/ArmyUtil/live_game/autometaloff.png\" /><!-- /ko --><!-- ko ifnot: Metal_bar.active() --><img src=\"coui://ui/mods/ArmyUtil/live_game/autometal.png\" /><!-- /ko --></a></div>");
+	//$(".div_ingame_options_bar_cont").prepend("<div class=\"btn_ingame_options div_metal_bar_cont\"><a href=\"#\" data-bind=\"click: function () { Metal_bar.active(!Metal_bar.active()); api.Panel.message(api.Panel.parentId, 'Metal_bar', Metal_bar.active()?'false':'true'); }\"><!-- ko if: Metal_bar.active() --><img src=\"coui://ui/mods/ArmyUtil/live_game/autometaloff.png\" /><!-- /ko --><!-- ko ifnot: Metal_bar.active() --><img src=\"coui://ui/mods/ArmyUtil/live_game/autometal.png\" /><!-- /ko --></a></div>");
 	
-	$(".div_ingame_options_bar_cont").prepend("<div class=\"btn_ingame_options div_Reclaim_bar_cont\"><a href=\"#\" data-bind=\"click: function () { Reclaim_bar.active(!Reclaim_bar.active()); api.Panel.message(api.Panel.parentId, 'Reclaim_bar', Reclaim_bar.active()?'false':'true'); }\"><!-- ko if: Reclaim_bar.active() --><img src=\"coui://ui/mods/ArmyUtil/live_game/autoreclaimoff.png\" /><!-- /ko --><!-- ko ifnot: Reclaim_bar.active() --><img src=\"coui://ui/mods/ArmyUtil/live_game/autoreclaim.png\" /><!-- /ko --></a></div>");
+	//$(".div_ingame_options_bar_cont").prepend("<div class=\"btn_ingame_options div_Reclaim_bar_cont\"><a href=\"#\" data-bind=\"click: function () { Reclaim_bar.active(!Reclaim_bar.active()); api.Panel.message(api.Panel.parentId, 'Reclaim_bar', Reclaim_bar.active()?'false':'true'); }\"><!-- ko if: Reclaim_bar.active() --><img src=\"coui://ui/mods/ArmyUtil/live_game/autoreclaimoff.png\" /><!-- /ko --><!-- ko ifnot: Reclaim_bar.active() --><img src=\"coui://ui/mods/ArmyUtil/live_game/autoreclaim.png\" /><!-- /ko --></a></div>");
 	
-	$(".div_ingame_options_bar_cont").prepend("<div class=\"btn_ingame_options div_Scout_bar_cont\"><a href=\"#\" data-bind=\"click: function () { Scout_bar.active(!Scout_bar.active()); api.Panel.message(api.Panel.parentId, 'Scout_bar', Scout_bar.active()?'false':'true'); }\"><!-- ko if: Scout_bar.active() --><img src=\"coui://ui/mods/ArmyUtil/live_game/autoscoutoff.png\" /><!-- /ko --><!-- ko ifnot: Scout_bar.active() --><img src=\"coui://ui/mods/ArmyUtil/live_game/autoscout.png\" /><!-- /ko --></a></div>");
+	//$(".div_ingame_options_bar_cont").prepend("<div class=\"btn_ingame_options div_Scout_bar_cont\"><a href=\"#\" data-bind=\"click: function () { Scout_bar.active(!Scout_bar.active()); api.Panel.message(api.Panel.parentId, 'Scout_bar', Scout_bar.active()?'false':'true'); }\"><!-- ko if: Scout_bar.active() --><img src=\"coui://ui/mods/ArmyUtil/live_game/autoscoutoff.png\" /><!-- /ko --><!-- ko ifnot: Scout_bar.active() --><img src=\"coui://ui/mods/ArmyUtil/live_game/autoscout.png\" /><!-- /ko --></a></div>");
 
 	
 })();
