@@ -1,8 +1,8 @@
  {
    "context": "client",
-   "identifier": "com.pa.ferretmaster.army-utilities-dev",
+   "identifier": "com.pa.ferretmaster.army-utilities",
    "display_name": "Army utilities",
-   "description": "A mod that adds a variety of stats in a window",
+   "description": "A mod that adds a variety of useful stats in a window",
    "author": "Ferretmaster",
    "version": "1.03",
    "build": "114880",
