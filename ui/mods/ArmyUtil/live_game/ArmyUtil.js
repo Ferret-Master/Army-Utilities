@@ -86,7 +86,7 @@
 	};
 	
 	//setting what will be options in settings menu in future
-	var automationSetting;
+
 	var autoMetalAir;
 	var autoMetalVehicle;
 	var autoMetalBot;
@@ -110,11 +110,13 @@
 	model.armyCount = ko.observable(0);
 	model.fabCount = ko.observable(0);
 	model.facCount = ko.observable(0);
+	model.TimeSinceLanding = ko.observable(0);
+	model.RealTimeSinceLanding = ko.observable(0);
 
 
-	var numberOfSettings = 7
+	var numberOfSettings = 6
 	var SettingsList = []
-	var Settings = ['Automation','Auto_Metal_Air','Auto_Metal_Bot','Auto_Metal_Vehicle','Auto_Metal_Naval','Auto_Reclaim_Combat_Fab','Auto_Scout']
+	var Settings = ['Auto_Metal_Air','Auto_Metal_Bot','Auto_Metal_Vehicle','Auto_Metal_Naval','Auto_Reclaim_Combat_Fab','Auto_Scout']
 	for (var i = 0;i < numberOfSettings;i++) {
 			SettingsList[i] = api.settings.isSet('ArmyUtilities', Settings[i], true)==undefined?false:api.settings.isSet('ArmyUtilities', Settings[i], true);
 			
@@ -123,7 +125,7 @@
 			
 		}
 	
-	automationSetting = SettingsList[0]
+	
 	autoMetalAir = SettingsList[1]
 	autoMetalVehicle = SettingsList[3]
 	autoMetalBot = SettingsList[2]
@@ -131,7 +133,7 @@
 	autoReclaim = SettingsList[5]
 	autoScout = SettingsList[6]
 	
-	
+	var landTime = 200000;
 	var automation = function () { 
 		var planetnum = model.planetListState().planets.length-1;
 		if(planetnum <1){_.delay(automation, 5000);}
@@ -155,7 +157,7 @@
 			}
 			
 		Promise.all(PlayerArmys.map(Promise.all, Promise)).then(function (ready){
-        if (worldView && automationSetting === true) {
+        if (worldView) {
 			
 			
 
@@ -168,6 +170,9 @@
 			fabCount = 0;
 			facCount = 0;
 
+			TimeSinceLanding = 0;
+			if(model.maxEnergy() > 0){if(model.TimeSinceLanding<landTime && model.TimeSinceLanding !== 0){landTime = model.TimeSinceLanding}}
+			
 			for(var i = 0; i<planetnum;i++){
 				
 				
@@ -269,7 +274,16 @@
 
 		console.log("Auto scout toggled "+ autoScoutToggle)
     };
-	
+	handlers.ArmyUtilTime = function(payload) {
+		console.log("time handler called with "+ payload)
+		model.TimeSinceLanding = payload;
+		if(landTime != 200000){
+
+			var realtime = model.TimeSinceLanding - landTime;
+			model.RealTimeSinceLanding(realtime);
+		}
+		
+		 };
     automation();
 	
 				
