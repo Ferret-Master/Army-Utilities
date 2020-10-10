@@ -275,7 +275,7 @@
 		console.log("Auto scout toggled "+ autoScoutToggle)
     };
 	handlers.ArmyUtilTime = function(payload) {
-		console.log("time handler called with "+ payload)
+		//console.log("time handler called with "+ payload)
 		model.TimeSinceLanding = payload;
 		if(landTime != 200000){
 
