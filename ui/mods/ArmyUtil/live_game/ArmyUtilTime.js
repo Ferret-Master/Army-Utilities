@@ -1,10 +1,10 @@
 //Only purpose is to relay time data to live_game
-function SendTime(){
+function SendArmyTime(){
 	var CurrentTime = model.currentTimeInSeconds()
 	//console.log("current time in time bar is "+CurrentTime)
 
 	api.Panel.message(api.Panel.parentId, 'ArmyUtilTime',CurrentTime)
-	setTimeout(SendTime, 1000);
+	setTimeout(SendArmyTime, 1000);
 	return
 	}
 (function () {
@@ -12,7 +12,7 @@ function SendTime(){
 
     //update every second
 
-    setTimeout(SendTime, 1000);
+    setTimeout(SendArmyTime, 1000);
 
 
 })();
